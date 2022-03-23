@@ -9,7 +9,7 @@ const { db } = require("../util/admin"); //include db connection
 exports.getAllDestinations = (request, response) => {
   //call specific database collection
   db.collection("destinations")
-    .orderBy("dateTime", "desc") //order it by dateTime attribute
+    .orderBy("createdAt", "desc") //order it by dateTime attribute
     .get() //make the call
     .then((data) => {
       let destinations = []; //empty array to store data
@@ -18,9 +18,11 @@ exports.getAllDestinations = (request, response) => {
         destinations.push({
           destinationId: doc.id,
           name: doc.data().name,
-          dateTime: doc.data().dateTime,
+          createdAt: doc.data().createdAt,
+          arrivalDateTime: doc.data().arrivalDateTime,
           address: doc.data().address,
-          location: doc.data().location,
+          lat: doc.data().lat,
+          lng: doc.data().lng,
           note: doc.data().note,
           rating: doc.data().rating,
           url: doc.data().url,
@@ -31,5 +33,97 @@ exports.getAllDestinations = (request, response) => {
     .catch((err) => {
       console.error(err); // catch errors if any and log them out
       return response.status(500).json({ error: err.code }); //return error if there is an error
+    });
+};
+
+//Add a new destination item
+exports.postOneDestination = (request, response) => {
+  //conditions for mandatory data
+  console.log("Name: ", request.body);
+  if (request.body.name.trim() === "") {
+    return response.status(400).json({ name: "Must not be empty" });
+  }
+
+  if (request.body.arrivalDateTime.trim() === "") {
+    return response.status(400).json({ arrivalDateTime: "Must not be empty" });
+  }
+
+  if (request.body.address.trim() === "") {
+    return response.status(400).json({ address: "Must not be empty" });
+  }
+
+  if (request.body.lat == "") {
+    return response.status(400).json({ lat: "Must not be empty" });
+  }
+
+  if (request.body.lng == "") {
+    return response.status(400).json({ lat: "Must not be empty" });
+  }
+
+  // create object for new Destination item
+  const newDestinationItem = {
+    name: request.body.name,
+    arrivalDateTime: request.body.arrivalDateTime,
+    createdAt: new Date().toISOString(),
+    address: request.body.address,
+    lat: request.body.lat,
+    lng: request.body.lng,
+    note: request.body.note,
+    rating: request.body.rating,
+    url: request.body.url,
+  };
+
+  //add to database then response accordingly
+  db.collection("destinations")
+    .add(newDestinationItem)
+    .then((doc) => {
+      const responseDestinationItem = newDestinationItem;
+      responseDestinationItem.id = doc.id;
+      return response.json(responseDestinationItem);
+    })
+    .catch((err) => {
+      response.status(500).json({ error: "Something went wrong" });
+      console.error(err);
+    });
+};
+
+exports.deleteDestination = (request, response) => {
+  const document = db.doc(`/destinations/${request.params.destinationId}`); //create search query with parameter from request
+  document
+    .get() //make the call
+    .then((doc) => {
+      if (!doc.exists) {
+        //if we did not find anything
+        return response.status(404).json({ error: "Destination not found" });
+      }
+      return document.delete(); //delete it
+    })
+    .then(() => {
+      response.json({ message: "Delete successfull" }); //send response for successul deletion
+    })
+    .catch((err) => {
+      //some error occured with the call
+      console.error(err);
+      return response.status(500).json({ error: err.code });
+    });
+};
+
+//edit a destination
+exports.editDestination = (request, response) => {
+  if (request.body.destinationId || request.body.createdAt) {
+    response.status(403).json({ message: "Not allowed to edit" });
+  }
+  let document = db
+    .collection("destinations")
+    .doc(`${request.params.destinationId}`);
+  document
+    .update(request.body)
+    .then(() => {
+      response.json({ message: "Successfully updated" });
+    })
+    .catch((err) => {
+      response.status(500).json({
+        error: err.code,
+      });
     });
 };
