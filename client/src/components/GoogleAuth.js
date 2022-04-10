@@ -1,5 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Button } from "@mui/material";
+
 import { signIn, signOut } from "../actions";
 
 class GoogleAuth extends React.Component {
@@ -40,21 +42,23 @@ class GoogleAuth extends React.Component {
       return null;
     } else if (this.props.isSignedIn) {
       return (
-        <button
+        <Button
+          variant="contained"
+          color="secondary"
           onClick={this.onSignOutClick}
-          className="mdc-button mdc-button--raised"
         >
-          <span className="mdc-button__label">Sign Out</span>
-        </button>
+          Sign out
+        </Button>
       );
     } else {
       return (
-        <button
+        <Button
+          variant="contained"
+          color="primary"
           onClick={this.onSignInClick}
-          className="mdc-button mdc-button--raised"
         >
-          <span className="mdc-button__label">Sign In</span>
-        </button>
+          Sign In
+        </Button>
       );
     }
   }
