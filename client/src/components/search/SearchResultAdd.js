@@ -1,47 +1,63 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
-import { TextField, Grid } from "@mui/material";
+import { Dialog, TextField, Grid, Button } from "@mui/material";
 
 class SearchResultAdd extends React.Component {
-  renderInput({ input, label }) {
+  // renderInput({ input, label }) {
+  //   return (
+  //     <div className="field">
+  //       <label>{label}</label>
+  //       <input {...input} />
+  //     </div>
+  //   );
+  // }
+
+  renderError({ error, touched }) {
+    if (touched && error) {
+      return (
+        <div className="ui error message">
+          <div className="header">{error}</div>
+        </div>
+      );
+    }
+  }
+
+  renderInputDate = ({ input, label, meta }) => {
     return (
-      <div className="field">
-        <label>{label}</label>
-        <input {...input} />
+      <div>
+        <TextField
+          {...input}
+          id="date"
+          label={label}
+          type="date"
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+        {this.renderError(meta)}
       </div>
     );
-  }
+  };
 
-  renderInputDate({ input, label }) {
+  renderInputTime = ({ input, label, meta }) => {
     return (
-      <TextField
-        {...input}
-        id="date"
-        label={label}
-        type="date"
-        InputLabelProps={{
-          shrink: true,
-        }}
-      />
+      <div>
+        <TextField
+          {...input}
+          id="time"
+          label={label}
+          type="time"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          inputProps={{
+            step: 300, // 5 min
+          }}
+        />
+        {this.renderError(meta)}
+      </div>
     );
-  }
-
-  renderInputTime({ input, label }) {
-    return (
-      <TextField
-        {...input}
-        id="time"
-        label={label}
-        type="time"
-        InputLabelProps={{
-          shrink: true,
-        }}
-        inputProps={{
-          step: 300, // 5 min
-        }}
-      />
-    );
-  }
+  };
 
   renderInputNotes({ input, label }) {
     return (
@@ -61,44 +77,97 @@ class SearchResultAdd extends React.Component {
     );
   }
 
+  onSubmit(formProps) {
+    console.log(formProps);
+  }
+
   render() {
     //console.log(this.props);
     return (
-      <form className="ui form">
-        <Grid
-          container
-          direction="column"
-          justifyContent="space-evently"
-          alignItems="center"
-          spacing={3}
+      // <form
+      //   onSubmit={this.props.handleSubmit(this.onSubmit)}
+      //   className="ui form"
+      // >
+      //   <Field
+      //     name="date"
+      //     component={this.renderInputDate}
+      //     label="Enter Planned Date"
+      //   />
+
+      //   <Field
+      //     name="time"
+      //     component={this.renderInputTime}
+      //     label="Enter Expected time of Arrival"
+      //   />
+
+      //   <Field
+      //     name="notes"
+      //     component={this.renderInputNotes}
+      //     label="Enter Notes (optional)"
+      //   />
+      //   <button>Add to Trip</button>
+      // </form>
+      <Dialog
+        open={true}
+        aria-labelledby="form-dialog-title"
+        fullWidth={true}
+        maxWidth="md"
+      >
+        <form
+          onSubmit={this.props.handleSubmit(this.onSubmit)}
+          className="ui form error"
         >
-          <Grid item xs={4}>
-            <Field
-              name="date"
-              component={this.renderInputDate}
-              label="Enter Planned Date"
-            />
+          <Grid
+            container
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            spacing={3}
+          >
+            <Grid item md={3}>
+              <Field
+                name="date"
+                component={this.renderInputDate}
+                label="Enter Planned Date"
+              />
+            </Grid>
+            <Grid item md={3}>
+              <Field
+                name="time"
+                component={this.renderInputTime}
+                label="Enter Expected time of Arrival"
+              />
+            </Grid>
+            <Grid item md={6}>
+              <Field
+                name="notes"
+                component={this.renderInputNotes}
+                label="Enter Notes (optional)"
+              />
+            </Grid>
+            <button>Add to Trip</button>
           </Grid>
-          <Grid item xs={4}>
-            <Field
-              name="time"
-              component={this.renderInputTime}
-              label="Enter Expected time of Arrival"
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <Field
-              name="notes"
-              component={this.renderInputNotes}
-              label="Enter Notes (optional)"
-            />
-          </Grid>
-        </Grid>
-      </form>
+        </form>
+      </Dialog>
     );
   }
 }
 
+const validate = (formValues) => {
+  const errors = {};
+
+  if (!formValues.date) {
+    errors.date = "You must enter a date of arrival for this location";
+  }
+
+  if (!formValues.time) {
+    errors.time = "You must enter a time of arrival for this location";
+  }
+
+  return errors;
+};
+
 export default reduxForm({
   form: "searchResultAdd",
+  validate,
 })(SearchResultAdd);
