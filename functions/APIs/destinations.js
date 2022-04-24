@@ -143,37 +143,15 @@ exports.searchDestinations = async (request, response) => {
 
   try {
     const myResponse = await axios(config);
-    //console.log("Search Locations results: ", myResponse.data);
-    return response.json(myResponse.data);
+    console.log("I am in here");
+    //response.set("Access-Control-Allow-Headers", "Content-Type");
+    response.set("Access-Control-Allow-Origin", "*");
+    //response.set("Access-Control-Allow-Method", "GET,POST", "PUT", "DELETE");
+    //response.set("Access-Control-Allow-Credentials", "true");
+    // response.set("Content-Type", "*");
+    return response.json(myResponse.data.results);
   } catch (err) {
-    console.log("Error while calling Google API: ", err);
+    console.log("Error while calling Google Places API: ", err);
     return response.status(500).json({ error: err.code });
   }
-  //call specific database collection
-  // db.collection("destinations")
-  //   .orderBy("createdAt", "desc") //order it by dateTime attribute
-  //   .get() //make the call
-  //   .then((data) => {
-  //     let destinations = []; //empty array to store data
-  //     data.forEach((doc) => {
-  //       //loop through response data and push to local array
-  //       destinations.push({
-  //         destinationId: doc.id,
-  //         name: doc.data().name,
-  //         createdAt: doc.data().createdAt,
-  //         arrivalDateTime: doc.data().arrivalDateTime,
-  //         address: doc.data().address,
-  //         lat: doc.data().lat,
-  //         lng: doc.data().lng,
-  //         note: doc.data().note,
-  //         rating: doc.data().rating,
-  //         url: doc.data().url,
-  //       });
-  //     });
-  //     return response.json(destinations); //return array to client
-  //   })
-  //   .catch((err) => {
-  //     console.error(err); // catch errors if any and log them out
-  //     return response.status(500).json({ error: err.code }); //return error if there is an error
-  //   });
 };
