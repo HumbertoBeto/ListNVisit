@@ -18,5 +18,16 @@ export const signOut = () => {
 
 export const searchLocations = (searchInput) => async (dispatch) => {
   const apiQuery = `/textsearch/json?query=${searchInput}&key=AIzaSyBsA3aUKWt3O9gMIBTM-eyMH6Zkn6vtnfg`;
-  google.get(apiQuery);
+
+  const config = {
+    method: "get",
+    url: apiQuery,
+  };
+
+  try {
+    const myResponse = await google(config);
+    console.log("Search Locations results: ", myResponse.data);
+  } catch (err) {
+    console.log("Error while calling Google API: ", err);
+  }
 };

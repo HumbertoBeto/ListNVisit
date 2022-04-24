@@ -3,8 +3,10 @@
 //dateTime in YYYY-MM-DD HH:MM:SS
 //add rating
 //add address
+const axios = require("axios");
 
 const { db } = require("../util/admin"); //include db connection
+//const axios = require;
 
 exports.getAllDestinations = (request, response) => {
   //call specific database collection
@@ -126,4 +128,52 @@ exports.editDestination = (request, response) => {
         error: err.code,
       });
     });
+};
+
+exports.searchDestinations = async (request, response) => {
+  console.log(request.body);
+  console.log(request.body.searchTerm);
+  const apiQuery = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${request.body.searchTerm}&key=AIzaSyBsA3aUKWt3O9gMIBTM-eyMH6Zkn6vtnfg`;
+  console.log(apiQuery);
+
+  const config = {
+    method: "get",
+    url: apiQuery,
+  };
+
+  try {
+    const myResponse = await axios(config);
+    //console.log("Search Locations results: ", myResponse.data);
+    return response.json(myResponse.data);
+  } catch (err) {
+    console.log("Error while calling Google API: ", err);
+    return response.status(500).json({ error: err.code });
+  }
+  //call specific database collection
+  // db.collection("destinations")
+  //   .orderBy("createdAt", "desc") //order it by dateTime attribute
+  //   .get() //make the call
+  //   .then((data) => {
+  //     let destinations = []; //empty array to store data
+  //     data.forEach((doc) => {
+  //       //loop through response data and push to local array
+  //       destinations.push({
+  //         destinationId: doc.id,
+  //         name: doc.data().name,
+  //         createdAt: doc.data().createdAt,
+  //         arrivalDateTime: doc.data().arrivalDateTime,
+  //         address: doc.data().address,
+  //         lat: doc.data().lat,
+  //         lng: doc.data().lng,
+  //         note: doc.data().note,
+  //         rating: doc.data().rating,
+  //         url: doc.data().url,
+  //       });
+  //     });
+  //     return response.json(destinations); //return array to client
+  //   })
+  //   .catch((err) => {
+  //     console.error(err); // catch errors if any and log them out
+  //     return response.status(500).json({ error: err.code }); //return error if there is an error
+  //   });
 };
