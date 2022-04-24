@@ -143,12 +143,13 @@ exports.searchDestinations = async (request, response) => {
 
   try {
     const myResponse = await axios(config);
-    console.log("I am in here");
-    //response.set("Access-Control-Allow-Headers", "Content-Type");
+    // console.log("I am in here");
+    // response.set("Access-Control-Allow-Headers", "Content-Type");
     response.set("Access-Control-Allow-Origin", "*");
-    //response.set("Access-Control-Allow-Method", "GET,POST", "PUT", "DELETE");
+    // response.set("Access-Control-Allow-Methods", "*");
+    // response.set("Access-Control-Max-Age", "3600");
     //response.set("Access-Control-Allow-Credentials", "true");
-    // response.set("Content-Type", "*");
+    //response.set("Content-Type", "*");
     return response.json(myResponse.data.results);
   } catch (err) {
     console.log("Error while calling Google Places API: ", err);
