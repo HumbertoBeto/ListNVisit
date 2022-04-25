@@ -1,5 +1,6 @@
 import list from "../apis/list";
 import google from "../apis/google";
+import axios from "axios";
 
 import {
   SIGN_IN,
@@ -34,13 +35,12 @@ export const fetchSearchLocations = () => {
 //action creator to search for locations using Google places API
 //returns a JSON list of locations
 export const searchLocations = (searchInput) => async (dispatch) => {
-  //const apiQuery = `/textsearch/json?query=${searchInput}&key=AIzaSyBsA3aUKWt3O9gMIBTM-eyMH6Zkn6vtnfg`;
-
   const dataObj = {
     searchTerm: searchInput,
   };
 
   console.log(dataObj);
+  console.log("ENV API KEY: ", process.env.REACT_APP_PLACES_API_KEY);
 
   const config = {
     method: "post",
@@ -48,10 +48,30 @@ export const searchLocations = (searchInput) => async (dispatch) => {
     data: dataObj,
   };
 
-  //call API & dispatch
   try {
+    //call API that calls Google places API
     const myResponse = await list(config);
     console.log("Search Locations results: ", myResponse.data);
+
+    //loop through each place and get Photo url that will be used to show pics
+    for (let cur of myResponse.data) {
+      if (cur.hasOwnProperty("photos") === false) {
+        //console.log("MISSING PHOTO REFERENCE");
+        cur.picUrl =
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png";
+      } else {
+        const picUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${cur.photos[0].photo_reference}&key=${process.env.REACT_APP_PLACES_API_KEY}`;
+        const config2 = {
+          method: "get",
+          url: picUrl,
+        };
+        const myPicResponse = await axios(config2);
+        cur.picUrl = myPicResponse.request.responseURL;
+      }
+      //console.log("MYPICRESPONSE: ", myPicResponse.request.responseURL);
+    }
+
+    //dispatch to update search locations & dispatch to fetch latest search locations
     dispatch({ type: UPDATE_SEARCH_LOCATIONS, payload: myResponse.data });
     dispatch({ type: FETCH_SEARCH_LOCATIONS });
   } catch (err) {
