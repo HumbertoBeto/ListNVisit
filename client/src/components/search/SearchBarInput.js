@@ -51,7 +51,8 @@ class SearchBarInput extends React.Component {
         padding: "2px 4px",
         display: "flex",
         alignItems: "center",
-        width: 400,
+        width: 600,
+        marginRight: "300px",
       },
       input: {
         marginLeft: 1,

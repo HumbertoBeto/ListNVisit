@@ -58,7 +58,7 @@ class SearchResultList extends React.Component {
         flexWrap: "wrap",
         justifyContent: "space-around",
         overflow: "hidden",
-        // backgroundColor: "red",
+        backgroundColor: "white",
       },
       imageList: {
         width: 700,
@@ -68,7 +68,7 @@ class SearchResultList extends React.Component {
 
     console.log(this.props.searchResults);
     return (
-      <div className={myStyle.root}>
+      <div style={myStyle.root}>
         <ImageList rowHeight={180} style={myStyle.imageList}>
           <ImageListItem key="Subheader" cols={2} style={{ height: "auto" }}>
             <ListSubheader component="div">Search Results:</ListSubheader>
