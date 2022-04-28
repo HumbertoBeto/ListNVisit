@@ -1,6 +1,9 @@
 import React from "react";
+import { toggleAddForm } from "../../actions";
+import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import { Dialog, TextField, Grid, Button } from "@mui/material";
+import Search from "@mui/icons-material/Search";
 
 class SearchResultAdd extends React.Component {
   // renderInput({ input, label }) {
@@ -77,12 +80,13 @@ class SearchResultAdd extends React.Component {
     );
   }
 
-  onSubmit(formProps) {
+  onSubmit = (formProps) => {
     console.log(formProps);
-  }
+    this.props.toggleAddForm();
+  };
 
   render() {
-    //console.log(this.props);
+    console.log("PAGE CONTROLS: ", this.props.pageControls.addFormShow);
     return (
       // <form
       //   onSubmit={this.props.handleSubmit(this.onSubmit)}
@@ -108,7 +112,7 @@ class SearchResultAdd extends React.Component {
       //   <button>Add to Trip</button>
       // </form>
       <Dialog
-        open={true}
+        open={this.props.pageControls.addFormShow}
         aria-labelledby="form-dialog-title"
         fullWidth={true}
         maxWidth="md"
@@ -152,6 +156,12 @@ class SearchResultAdd extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return { pageControls: state.pageControls };
+};
+
+SearchResultAdd = connect(mapStateToProps, { toggleAddForm })(SearchResultAdd);
 
 const validate = (formValues) => {
   const errors = {};

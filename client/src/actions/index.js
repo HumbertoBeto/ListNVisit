@@ -8,6 +8,7 @@ import {
   UPDATE_SEARCH_LOCATIONS,
   FETCH_SEARCH_LOCATIONS,
   FETCH_LIST,
+  TOGGLE_ADD_FORM,
   ADD_LIST_LOCATION,
   REMOVE_LIST_LOCATION,
   UPDATE_LIST_LOCATION,
@@ -95,3 +96,18 @@ export const getList = () => async (dispatch) => {
     console.log("Error getting current Itinerary list ", err);
   }
 };
+
+//action creator to show/hide add form when user clicks + button on search item
+export const toggleAddForm = () => {
+  console.log("I AM IN ACTIONS, ABOUT TO TOGGLE");
+  return {
+    type: TOGGLE_ADD_FORM,
+  };
+};
+
+//action creator to add
+// export const addListLocation = () => {
+//   return {
+//     type: TOGGLE_ADD_FORM,
+//   };
+// };

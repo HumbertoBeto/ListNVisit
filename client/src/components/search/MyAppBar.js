@@ -16,10 +16,13 @@ class MyAppBar extends React.Component {
         flexGrow: 1,
         // marginRight: "800px",
       },
+      topBar: {
+        backgroundColor: "#FFB2A6",
+      },
     };
     return (
       <div style={myStyle.root}>
-        <AppBar position="static">
+        <AppBar position="static" style={myStyle.topBar}>
           <Toolbar>
             <IconButton
               edge="start"

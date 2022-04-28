@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { fetchSearchLocations } from "../../actions";
+import { fetchSearchLocations, toggleAddForm } from "../../actions";
 import {
   List,
   ListItem,
@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 
 import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
+import SearchResultAdd from "./SearchResultAdd";
 //import { InfoIcon } from "@mui/icons-material";
 
 class SearchResultList extends React.Component {
@@ -40,6 +41,7 @@ class SearchResultList extends React.Component {
               <IconButton
                 aria-label={`add ${location.name}`}
                 style={myStyle.icon}
+                onClick={this.props.toggleAddForm}
               >
                 <AddCircleOutlineRoundedIcon />
               </IconButton>
@@ -62,13 +64,14 @@ class SearchResultList extends React.Component {
       },
       imageList: {
         width: 700,
-        height: 600,
+        height: 900,
       },
     };
 
     console.log(this.props.searchResults);
     return (
       <div style={myStyle.root}>
+        <SearchResultAdd />
         <ImageList rowHeight={180} style={myStyle.imageList}>
           <ImageListItem key="Subheader" cols={2} style={{ height: "auto" }}>
             <ListSubheader component="div">Search Results:</ListSubheader>
@@ -85,6 +88,7 @@ const mapStateToProps = (state) => {
   return { searchResults: Object.values(state.searchResults) };
 };
 
-export default connect(mapStateToProps, { fetchSearchLocations })(
-  SearchResultList
-);
+export default connect(mapStateToProps, {
+  fetchSearchLocations,
+  toggleAddForm,
+})(SearchResultList);
