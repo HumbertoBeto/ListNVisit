@@ -23,6 +23,11 @@ class SearchResultList extends React.Component {
     this.props.fetchSearchLocations();
   }
 
+  onAddClicked = (location) => {
+    console.log("ON ADD CLICKED: ", location.name);
+    this.props.toggleAddForm(location);
+  };
+
   //loops through search results array and creates list items
   renderList() {
     const myStyle = {
@@ -41,7 +46,7 @@ class SearchResultList extends React.Component {
               <IconButton
                 aria-label={`add ${location.name}`}
                 style={myStyle.icon}
-                onClick={this.props.toggleAddForm}
+                onClick={() => this.onAddClicked(location)}
               >
                 <AddCircleOutlineRoundedIcon />
               </IconButton>

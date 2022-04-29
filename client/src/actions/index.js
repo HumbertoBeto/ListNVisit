@@ -98,10 +98,11 @@ export const getList = () => async (dispatch) => {
 };
 
 //action creator to show/hide add form when user clicks + button on search item
-export const toggleAddForm = () => {
-  console.log("I AM IN ACTIONS, ABOUT TO TOGGLE");
+export const toggleAddForm = (location) => {
+  console.log("ToggleAddForm action creator: ", location.name);
   return {
     type: TOGGLE_ADD_FORM,
+    payload: location,
   };
 };
 
