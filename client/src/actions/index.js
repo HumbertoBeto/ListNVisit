@@ -9,7 +9,6 @@ import {
   FETCH_SEARCH_LOCATIONS,
   FETCH_LIST,
   TOGGLE_ADD_FORM,
-  ADD_LIST_LOCATION,
   REMOVE_LIST_LOCATION,
   UPDATE_LIST_LOCATION,
 } from "./types";
@@ -99,7 +98,7 @@ export const getList = () => async (dispatch) => {
 
 //action creator to show/hide add form when user clicks + button on search item
 export const toggleAddForm = (location) => {
-  console.log("ToggleAddForm action creator: ", location.name);
+  //console.log("ToggleAddForm action creator: ", location.name);
   return {
     type: TOGGLE_ADD_FORM,
     payload: location,
@@ -107,8 +106,48 @@ export const toggleAddForm = (location) => {
 };
 
 //action creator to add
-// export const addListLocation = () => {
-//   return {
-//     type: TOGGLE_ADD_FORM,
-//   };
-// };
+export const addListLocation = (searchItem, formProps) => async (dispatch) => {
+  console.log("Chosen search item Action", searchItem);
+  console.log(" Form props Action", formProps);
+
+  const curArrivalDateTime = formProps.date + " " + formProps.time + ":00";
+
+  const dataObj = {
+    name: searchItem.name,
+    arrivalDateTime: curArrivalDateTime,
+    address: searchItem.formatted_address,
+    lat: searchItem.geometry.location.lat,
+    lng: searchItem.geometry.location.lng,
+    note: formProps.notes,
+    rating: searchItem.rating,
+    url: searchItem.picUrl,
+  };
+
+  const config = {
+    method: "post",
+    url: "/destination",
+    data: dataObj,
+  };
+
+  try {
+    const myResponse = await list(config);
+    console.log("SUCCESSFUL RESPONSE: ", myResponse);
+
+    const config2 = {
+      method: "get",
+      url: "/destinations",
+    };
+
+    const myResponse2 = await list(config2);
+
+    console.log("MYRESPONSE2: ", myResponse2);
+    dispatch({ type: FETCH_LIST, payload: myResponse2 });
+    dispatch({ type: TOGGLE_ADD_FORM });
+  } catch (err) {
+    console.log("Error when API call to add location to List", err);
+  }
+
+  // return {
+  //   type: ADD_LIST_LOCATION,
+  // };
+};

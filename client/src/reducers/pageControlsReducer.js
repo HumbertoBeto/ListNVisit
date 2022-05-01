@@ -1,4 +1,4 @@
-import { TOGGLE_ADD_FORM } from "../actions/types";
+import { TOGGLE_ADD_FORM, ADD_LIST_LOCATION } from "../actions/types";
 
 const INITIAL_STATE = {
   addFormShow: false,
@@ -18,6 +18,9 @@ export default (state = INITIAL_STATE, action) => {
       } else {
         return { ...state, addFormShow: false };
       }
+    // case ADD_LIST_LOCATION:
+    //   //when user adds/submits a new location to list
+    //   return { ...state, addFormShow: false };
     default:
       return state;
   }
