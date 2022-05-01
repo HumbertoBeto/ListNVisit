@@ -1,5 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
+//import { DeleteIcon } from "@mui/icons-materi/";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { getList } from "../../actions";
 import {
   List,
@@ -9,6 +11,8 @@ import {
   ListItemAvatar,
   Avatar,
   Typography,
+  ListItemSecondaryAction,
+  IconButton,
 } from "@mui/material";
 
 class MyList extends React.Component {
@@ -58,6 +62,11 @@ class MyList extends React.Component {
                 </React.Fragment>
               }
             />
+            <ListItemSecondaryAction>
+              <IconButton edge="end" aria-label="delete">
+                <MoreHorizIcon />
+              </IconButton>
+            </ListItemSecondaryAction>
           </ListItem>
           <Divider />
           {/* <ListItem alignItems="flex-start">
