@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+import { getList } from "../../actions";
 import {
   List,
   ListItem,
@@ -10,6 +12,10 @@ import {
 } from "@mui/material";
 
 class MyList extends React.Component {
+  componentDidMount() {
+    this.props.getList();
+  }
+
   renderList() {
     const myStyle = {
       root: {
@@ -21,31 +27,40 @@ class MyList extends React.Component {
         display: "inline",
       },
     };
-    return (
-      <div>
-        <ListItem alignItems="flex-start">
-          <ListItemAvatar>
-            <Avatar alt="Pizza" src="" />
-          </ListItemAvatar>
-          <ListItemText
-            primary="Dominos Pizza"
-            secondary={
-              <React.Fragment>
-                <Typography
-                  component="span"
-                  variant="body2"
-                  style={myStyle.inline}
-                  color="textPrimary"
-                >
-                  May 22
-                </Typography>
-                {" — Dinner with the Family"}
-              </React.Fragment>
-            }
-          />
-        </ListItem>
-        <Divider />
-        <ListItem alignItems="flex-start">
+
+    //sort list by date
+    let sortedList = this.props.curList.sort(
+      (a, b) => new Date(a.arrivalDateTime) - new Date(b.arrivalDateTime)
+    );
+
+    console.log("SORTED LIST", sortedList);
+
+    return sortedList.map((location) => {
+      return (
+        <div key={location.destinationId}>
+          <ListItem alignItems="flex-start">
+            <ListItemAvatar>
+              <Avatar alt={location.name} src={location.url} />
+            </ListItemAvatar>
+            <ListItemText
+              primary={location.name}
+              secondary={
+                <React.Fragment>
+                  <Typography
+                    component="span"
+                    variant="body2"
+                    style={myStyle.inline}
+                    color="textPrimary"
+                  >
+                    {location.arrivalDateTime}
+                  </Typography>
+                  {` — ${location.note}`}
+                </React.Fragment>
+              }
+            />
+          </ListItem>
+          <Divider />
+          {/* <ListItem alignItems="flex-start">
           <ListItemAvatar>
             <Avatar alt="Burgers" src="" />
           </ListItemAvatar>
@@ -65,9 +80,10 @@ class MyList extends React.Component {
               </React.Fragment>
             }
           />
-        </ListItem>
-      </div>
-    );
+        </ListItem> */}
+        </div>
+      );
+    });
   }
 
   render() {
@@ -86,4 +102,8 @@ class MyList extends React.Component {
   }
 }
 
-export default MyList;
+//Object is necessary to make it an array of objects to then use Map to loop
+const mapStateToProps = (state) => {
+  return { curList: Object.values(state.list) };
+};
+export default connect(mapStateToProps, { getList })(MyList);

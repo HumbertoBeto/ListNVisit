@@ -8,6 +8,12 @@ export default (state = INITIAL_STATE, action) => {
       //console.log("I AM IN SEARCH ");
       //console.log(action.payload[0].place_id);
       //const newState = action.payload;
+
+      // const sortedList = action.payload.sort(
+      //   (a, b) => a.arrivalDateTime - b.arrivalDateTime
+      // );
+
+      //console.log("SorteList :", sortedList);
       return action.payload;
     //..newState, ..._.mapKeys(action.payload, "place_id") };
     default:

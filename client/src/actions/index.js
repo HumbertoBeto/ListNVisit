@@ -133,15 +133,15 @@ export const addListLocation = (searchItem, formProps) => async (dispatch) => {
     const myResponse = await list(config);
     console.log("SUCCESSFUL RESPONSE: ", myResponse);
 
-    const config2 = {
-      method: "get",
-      url: "/destinations",
-    };
+    // const config2 = {
+    //   method: "get",
+    //   url: "/destinations",
+    // };
 
-    const myResponse2 = await list(config2);
+    // const myResponse2 = await list(config2);
 
-    console.log("MYRESPONSE2: ", myResponse2);
-    dispatch({ type: FETCH_LIST, payload: myResponse2 });
+    // console.log("MYRESPONSE2: ", myResponse2);
+    // dispatch({ type: FETCH_LIST, payload: myResponse2 });
     dispatch({ type: TOGGLE_ADD_FORM });
   } catch (err) {
     console.log("Error when API call to add location to List", err);

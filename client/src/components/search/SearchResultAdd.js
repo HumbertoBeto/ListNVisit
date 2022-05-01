@@ -1,5 +1,5 @@
 import React from "react";
-import { toggleAddForm, addListLocation } from "../../actions";
+import { toggleAddForm, addListLocation, getList } from "../../actions";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import { Dialog, TextField, Grid, Button } from "@mui/material";
@@ -80,16 +80,17 @@ class SearchResultAdd extends React.Component {
     );
   }
 
-  onSubmit = (formProps) => {
+  onSubmit = async (formProps) => {
     console.log("Form props Component", formProps);
     console.log(
       "Chosen search item Component",
       this.props.pageControls.chosenSearchLocation
     );
-    this.props.addListLocation(
+    await this.props.addListLocation(
       this.props.pageControls.chosenSearchLocation,
       formProps
     );
+    await this.props.getList();
   };
 
   render() {
@@ -168,9 +169,11 @@ const mapStateToProps = (state) => {
   return { pageControls: state.pageControls };
 };
 
-SearchResultAdd = connect(mapStateToProps, { toggleAddForm, addListLocation })(
-  SearchResultAdd
-);
+SearchResultAdd = connect(mapStateToProps, {
+  toggleAddForm,
+  addListLocation,
+  getList,
+})(SearchResultAdd);
 
 const validate = (formValues) => {
   const errors = {};
