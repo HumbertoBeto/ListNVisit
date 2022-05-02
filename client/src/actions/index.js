@@ -9,6 +9,7 @@ import {
   FETCH_SEARCH_LOCATIONS,
   FETCH_LIST,
   TOGGLE_ADD_FORM,
+  TOGGLE_MENU_CLICKED,
   REMOVE_LIST_LOCATION,
   UPDATE_LIST_LOCATION,
 } from "./types";
@@ -101,6 +102,14 @@ export const toggleAddForm = (location) => {
   //console.log("ToggleAddForm action creator: ", location.name);
   return {
     type: TOGGLE_ADD_FORM,
+    payload: location,
+  };
+};
+
+export const toggleMenu = (location) => {
+  //console.log("ELEMENT REF: ", buttonElement);
+  return {
+    type: TOGGLE_MENU_CLICKED,
     payload: location,
   };
 };

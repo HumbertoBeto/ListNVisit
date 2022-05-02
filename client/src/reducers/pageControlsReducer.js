@@ -1,8 +1,14 @@
-import { TOGGLE_ADD_FORM, ADD_LIST_LOCATION } from "../actions/types";
+import {
+  TOGGLE_ADD_FORM,
+  ADD_LIST_LOCATION,
+  TOGGLE_MENU_CLICKED,
+} from "../actions/types";
 
 const INITIAL_STATE = {
   addFormShow: false,
+  menuShow: false,
   chosenSearchLocation: {},
+  listItemChosen: {},
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -18,9 +24,17 @@ export default (state = INITIAL_STATE, action) => {
       } else {
         return { ...state, addFormShow: false };
       }
-    // case ADD_LIST_LOCATION:
-    //   //when user adds/submits a new location to list
-    //   return { ...state, addFormShow: false };
+    case TOGGLE_MENU_CLICKED:
+      // when user clicks three dots icon on a list item
+      if (state.menuShow === false) {
+        return {
+          ...state,
+          menuShow: true,
+          listItemChosen: action.payload,
+        };
+      } else {
+        return { ...state, menuShow: false };
+      }
     default:
       return state;
   }
