@@ -40,8 +40,8 @@ export const searchLocations = (searchInput) => async (dispatch) => {
     searchTerm: searchInput,
   };
 
-  console.log(dataObj);
-  console.log("ENV API KEY: ", process.env.REACT_APP_PLACES_API_KEY);
+  //console.log(dataObj);
+  //console.log("ENV API KEY: ", process.env.REACT_APP_PLACES_API_KEY);
 
   const config = {
     method: "post",
@@ -52,7 +52,7 @@ export const searchLocations = (searchInput) => async (dispatch) => {
   try {
     //call API that calls Google places API
     const myResponse = await list(config);
-    console.log("Search Locations results: ", myResponse.data);
+    //console.log("Search Locations results: ", myResponse.data);
 
     //loop through each place and get Photo url that will be used to show pics
     for (let cur of myResponse.data) {
@@ -90,10 +90,27 @@ export const getList = () => async (dispatch) => {
   //call API and dispatch
   try {
     const myResponse = await list(config);
-    console.log("Current ITINERARY LIST: ", myResponse.data);
+    // console.log("Current ITINERARY LIST: ", myResponse.data);
     dispatch({ type: FETCH_LIST, payload: myResponse.data });
   } catch (err) {
     console.log("Error getting current Itinerary list ", err);
+  }
+};
+
+//action creator for getting current list of destinations
+export const deleteListItem = (location) => async (dispatch) => {
+  const config = {
+    method: "delete",
+    url: `/destination/${location.destinationId}`,
+  };
+
+  //call API and dispatch
+  try {
+    const myResponse = await list(config);
+    console.log("Delete Successful: ", myResponse.data);
+    dispatch({ type: REMOVE_LIST_LOCATION });
+  } catch (err) {
+    console.log("Error while deleting list item", err);
   }
 };
 
@@ -107,7 +124,7 @@ export const toggleAddForm = (location) => {
 };
 
 export const toggleMenu = (location) => {
-  //console.log("ELEMENT REF: ", buttonElement);
+  //console.log("TOGGLE_MENU: ", location);
   return {
     type: TOGGLE_MENU_CLICKED,
     payload: location,
@@ -116,8 +133,8 @@ export const toggleMenu = (location) => {
 
 //action creator to add
 export const addListLocation = (searchItem, formProps) => async (dispatch) => {
-  console.log("Chosen search item Action", searchItem);
-  console.log(" Form props Action", formProps);
+  //console.log("Chosen search item Action", searchItem);
+  //console.log(" Form props Action", formProps);
 
   const curArrivalDateTime = formProps.date + " " + formProps.time + ":00";
 
@@ -140,7 +157,7 @@ export const addListLocation = (searchItem, formProps) => async (dispatch) => {
 
   try {
     const myResponse = await list(config);
-    console.log("SUCCESSFUL RESPONSE: ", myResponse);
+    //console.log("SUCCESSFUL RESPONSE: ", myResponse);
 
     // const config2 = {
     //   method: "get",

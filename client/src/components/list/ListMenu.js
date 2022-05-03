@@ -1,17 +1,19 @@
 import React from "react";
 import { connect } from "react-redux";
-import { toggleMenu } from "../../actions";
+import { toggleMenu, getList, deleteListItem } from "../../actions";
 import { MenuItem, Menu } from "@mui/material";
 
 class ListMenu extends React.Component {
-  deleteClicked = () => {
+  deleteClicked = async () => {
     console.log("DELETE CLICKED!!!");
-    this.props.toggleMenu();
+    await this.props.deleteListItem(this.props.listItemChosen);
+    await this.props.getList();
   };
 
-  editClicked = () => {
+  editClicked = async () => {
     console.log("EDIT CLICKED!!!");
-    this.props.toggleMenu();
+    await this.props.toggleMenu();
+    // await this.props.getList();
   };
 
   render() {
@@ -22,7 +24,7 @@ class ListMenu extends React.Component {
         keepMounted
         open={this.props.menuShow}
         onClose={() => {
-          this.toggleMenu();
+          //this.toggleMenu();
         }}
       >
         <MenuItem onClick={this.editClicked}>Edit</MenuItem>
@@ -33,7 +35,14 @@ class ListMenu extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return { menuShow: state.pageControls.menuShow };
+  return {
+    menuShow: state.pageControls.menuShow,
+    listItemChosen: state.pageControls.listItemChosen,
+  };
 };
 
-export default connect(mapStateToProps, { toggleMenu })(ListMenu);
+export default connect(mapStateToProps, {
+  toggleMenu,
+  getList,
+  deleteListItem,
+})(ListMenu);

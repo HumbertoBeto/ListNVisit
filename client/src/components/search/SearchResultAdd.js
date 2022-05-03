@@ -81,11 +81,11 @@ class SearchResultAdd extends React.Component {
   }
 
   onSubmit = async (formProps) => {
-    console.log("Form props Component", formProps);
-    console.log(
-      "Chosen search item Component",
-      this.props.pageControls.chosenSearchLocation
-    );
+    // console.log("Form props Component", formProps);
+    // console.log(
+    //   "Chosen search item Component",
+    //   this.props.pageControls.chosenSearchLocation
+    // );
     await this.props.addListLocation(
       this.props.pageControls.chosenSearchLocation,
       formProps
@@ -94,7 +94,7 @@ class SearchResultAdd extends React.Component {
   };
 
   render() {
-    console.log("PAGE CONTROLS: ", this.props.pageControls.addFormShow);
+    //console.log("PAGE CONTROLS: ", this.props.pageControls.addFormShow);
     return (
       // <form
       //   onSubmit={this.props.handleSubmit(this.onSubmit)}

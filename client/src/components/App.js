@@ -5,6 +5,7 @@ import Home from "./Home";
 import SearchResultAdd from "./search/SearchResultAdd";
 import SearchBarInput from "./search/SearchBarInput";
 import SearchResultList from "./search/SearchResultList";
+import Map from "./map/Map";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
           <Route path="/add" exact component={SearchResultAdd} />
           <Route path="/search" exact component={SearchBarInput} />
           <Route path="/results" exact component={SearchResultList} />
+          <Route path="/map" exact component={Map} />
         </div>
       </BrowserRouter>
     </div>

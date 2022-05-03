@@ -21,10 +21,10 @@ class MyList extends React.Component {
     this.props.getList();
   }
 
-  menuButtonClicked = (location, event) => {
-    console.log(event.currentTarget);
-    this.props.toggleMenu(location);
-  };
+  // menuButtonClicked = (location, event) => {
+  //   console.log(event.currentTarget);
+  //   this.props.toggleMenu(location);
+  // };
 
   renderList() {
     const myStyle = {
@@ -43,7 +43,7 @@ class MyList extends React.Component {
       (a, b) => new Date(a.arrivalDateTime) - new Date(b.arrivalDateTime)
     );
 
-    console.log("SORTED LIST", sortedList);
+    //console.log("SORTED LIST", sortedList);
 
     //create reft
     return sortedList.map((location) => {
