@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 //import { DeleteIcon } from "@mui/icons-materi/";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import ListMenu from "./ListMenu";
+import ListEdit from "./ListEdit";
 import { getList, toggleMenu } from "../../actions";
 import {
   List,
@@ -126,6 +127,7 @@ class MyList extends React.Component {
       <div>
         <List style={myStyle.root}>{this.renderList()}</List>
         <ListMenu />
+        <ListEdit />
       </div>
     );
   }

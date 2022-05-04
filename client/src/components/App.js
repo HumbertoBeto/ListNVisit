@@ -6,6 +6,7 @@ import SearchResultAdd from "./search/SearchResultAdd";
 import SearchBarInput from "./search/SearchBarInput";
 import SearchResultList from "./search/SearchResultList";
 import Map from "./map/Map";
+import ListEdit from "./list/ListEdit";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <Route path="/search" exact component={SearchBarInput} />
           <Route path="/results" exact component={SearchResultList} />
           <Route path="/map" exact component={Map} />
+          <Route path="/edit" exact component={ListEdit} />
         </div>
       </BrowserRouter>
     </div>
