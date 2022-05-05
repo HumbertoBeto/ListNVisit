@@ -137,4 +137,7 @@ class MyList extends React.Component {
 const mapStateToProps = (state) => {
   return { curList: Object.values(state.list) };
 };
-export default connect(mapStateToProps, { getList, toggleMenu })(MyList);
+export default connect(mapStateToProps, {
+  getList,
+  toggleMenu,
+})(MyList);

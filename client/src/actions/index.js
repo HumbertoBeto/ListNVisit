@@ -12,6 +12,7 @@ import {
   TOGGLE_MENU_CLICKED,
   REMOVE_LIST_LOCATION,
   UPDATE_LIST_LOCATION,
+  TOGGLE_EDIT_FORM,
 } from "./types";
 
 export const signIn = (userId) => {
@@ -131,6 +132,13 @@ export const toggleMenu = (location) => {
   };
 };
 
+//show/hide Edit form menu on edit click in List item
+export const toggleEditForm = () => {
+  return {
+    type: TOGGLE_EDIT_FORM,
+  };
+};
+
 //action creator to add
 export const addListLocation = (searchItem, formProps) => async (dispatch) => {
   //console.log("Chosen search item Action", searchItem);
@@ -176,4 +184,26 @@ export const addListLocation = (searchItem, formProps) => async (dispatch) => {
   // return {
   //   type: ADD_LIST_LOCATION,
   // };
+};
+
+export const updateListItem = (listItem, formProps) => async (dispatch) => {
+  const curArrivalDateTime = formProps.date + " " + formProps.time + ":00";
+
+  const dataObj = {
+    note: formProps.notes,
+    arrivalDateTime: curArrivalDateTime,
+  };
+
+  var config = {
+    method: "put",
+    url: `/destination/${listItem.destinationId}`,
+    data: dataObj,
+  };
+
+  try {
+    const myResponse = await list(config);
+    dispatch({ type: TOGGLE_EDIT_FORM });
+  } catch (err) {
+    console.log("Error when calling update list item API:", err);
+  }
 };

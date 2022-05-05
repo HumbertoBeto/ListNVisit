@@ -1,6 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import { toggleMenu, getList, deleteListItem } from "../../actions";
+import {
+  toggleMenu,
+  getList,
+  deleteListItem,
+  toggleEditForm,
+} from "../../actions";
 import { MenuItem, Menu } from "@mui/material";
 
 class ListMenu extends React.Component {
@@ -8,10 +13,12 @@ class ListMenu extends React.Component {
     console.log("DELETE CLICKED!!!");
     await this.props.deleteListItem(this.props.listItemChosen);
     await this.props.getList();
+    await this.props.toggleMenu();
   };
 
   editClicked = async () => {
     console.log("EDIT CLICKED!!!");
+    await this.props.toggleEditForm();
     await this.props.toggleMenu();
     // await this.props.getList();
   };
@@ -45,4 +52,5 @@ export default connect(mapStateToProps, {
   toggleMenu,
   getList,
   deleteListItem,
+  toggleEditForm,
 })(ListMenu);

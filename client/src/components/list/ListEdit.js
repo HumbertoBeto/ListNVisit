@@ -1,5 +1,11 @@
 import React from "react";
-import { toggleAddForm, addListLocation, getList } from "../../actions";
+import {
+  toggleAddForm,
+  addListLocation,
+  getList,
+  toggleEditForm,
+  updateListItem,
+} from "../../actions";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import { Dialog, TextField, Grid, Button } from "@mui/material";
@@ -74,6 +80,11 @@ class ListEdit extends React.Component {
     // );
     // await this.props.getList();
 
+    await this.props.updateListItem(
+      this.props.pageControls.listItemChosen,
+      formProps
+    );
+    await this.props.getList();
     console.log("EDIT PROPS:", formProps);
   };
 
@@ -83,13 +94,14 @@ class ListEdit extends React.Component {
     //   formProps
     // );
     // await this.props.getList();
+    this.props.toggleEditForm();
 
     console.log("Cancel CLICKED");
   };
   render() {
     return (
       <Dialog
-        open={true}
+        open={this.props.pageControls.editFormShow}
         aria-labelledby="form-dialog-title"
         fullWidth={true}
         maxWidth="md"
@@ -126,7 +138,7 @@ class ListEdit extends React.Component {
                 label="New Notes:"
               />
             </Grid>
-            <button>Add to Trip</button>
+            <button>Update</button>
             <button type="button" onClick={this.onCancel}>
               Cancel
             </button>
@@ -145,6 +157,8 @@ ListEdit = connect(mapStateToProps, {
   toggleAddForm,
   addListLocation,
   getList,
+  toggleEditForm,
+  updateListItem,
 })(ListEdit);
 
 const validate = (formValues) => {

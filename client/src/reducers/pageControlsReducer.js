@@ -2,11 +2,13 @@ import {
   TOGGLE_ADD_FORM,
   ADD_LIST_LOCATION,
   TOGGLE_MENU_CLICKED,
+  TOGGLE_EDIT_FORM,
 } from "../actions/types";
 
 const INITIAL_STATE = {
   addFormShow: false,
   menuShow: false,
+  editFormShow: false,
   chosenSearchLocation: {},
   listItemChosen: {},
 };
@@ -34,6 +36,15 @@ export default (state = INITIAL_STATE, action) => {
         };
       } else {
         return { ...state, menuShow: false };
+      }
+    case TOGGLE_EDIT_FORM:
+      if (state.editFormShow === false) {
+        return {
+          ...state,
+          editFormShow: true,
+        };
+      } else {
+        return { ...state, editFormShow: false };
       }
     default:
       return state;
