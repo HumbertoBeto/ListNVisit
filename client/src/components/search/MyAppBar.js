@@ -17,21 +17,21 @@ class MyAppBar extends React.Component {
         // marginRight: "800px",
       },
       topBar: {
-        backgroundColor: "#FFB2A6",
+        backgroundColor: "#dc4c3f",
       },
     };
     return (
       <div style={myStyle.root}>
-        <AppBar position="static" style={myStyle.topBar}>
+        <AppBar position="fixed" style={myStyle.topBar}>
           <Toolbar>
-            <IconButton
+            {/* <IconButton
               edge="start"
               style={myStyle.root}
               color="inherit"
               aria-label="menu"
             >
-              {/* <MenuIcon /> */}
-            </IconButton>
+              <MenuIcon />
+            </IconButton> */}
             <Typography variant="h6" style={myStyle.title}>
               ListNVisit
             </Typography>

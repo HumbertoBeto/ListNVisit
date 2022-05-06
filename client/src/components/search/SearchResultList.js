@@ -32,13 +32,17 @@ class SearchResultList extends React.Component {
   renderList() {
     const myStyle = {
       icon: {
-        color: "rgba(255, 255, 255, 0.54)",
+        color: "#ffffff",
       },
     };
     return this.props.searchResults.map((location) => {
       return (
         <ImageListItem key={location.place_id}>
-          <img src={location.picUrl} alt={location.name} />
+          <img
+            src={location.picUrl}
+            alt={location.name}
+            style={{ height: "180px", width: "350px" }}
+          />
           <ImageListItemBar
             title={location.name}
             subtitle={<span>rating: {location.rating}</span>}
@@ -68,8 +72,8 @@ class SearchResultList extends React.Component {
         backgroundColor: "white",
       },
       imageList: {
-        width: 700,
-        height: 900,
+        width: 1400,
+        height: 930,
       },
     };
 
@@ -78,8 +82,13 @@ class SearchResultList extends React.Component {
       <div style={myStyle.root}>
         <SearchResultAdd />
         <ImageList rowHeight={180} style={myStyle.imageList}>
-          <ImageListItem key="Subheader" cols={2} style={{ height: "auto" }}>
-            <ListSubheader component="div">Search Results:</ListSubheader>
+          <ImageListItem
+            key="Subheader"
+            cols={4}
+            gap={8}
+            style={{ height: "auto" }}
+          >
+            {/* <ListSubheader component="div">Search Results:</ListSubheader> */}
           </ImageListItem>
           {this.renderList()}
         </ImageList>

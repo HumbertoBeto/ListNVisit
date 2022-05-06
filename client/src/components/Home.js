@@ -2,6 +2,7 @@ import React from "react";
 import SearchResultList from "./search/SearchResultList";
 import MyList from "./list/MyList";
 import MyAppBar from "./search/MyAppBar";
+import Map from "./map/Map";
 import { Grid, Paper } from "@mui/material";
 
 class Home extends React.Component {
@@ -9,7 +10,7 @@ class Home extends React.Component {
     const myStyle = {
       root: {
         flexGrow: 1,
-        paddingTop: "5px",
+        paddingTop: "50px",
       },
       paper: {
         height: 140,
@@ -19,7 +20,7 @@ class Home extends React.Component {
         // padding: theme.spacing(2),
       },
       page: {
-        background: "#9ADCFF",
+        background: "#ffffff",
       },
     };
     return (
@@ -28,12 +29,13 @@ class Home extends React.Component {
         <Grid container style={myStyle.root} spacing={2}>
           <Grid item xs={12}>
             <Grid container spacing={2}>
-              <Grid item>
+              <Grid item style={{ paddingLeft: "20px" }}>
                 <Paper>
                   <MyList />
                 </Paper>
               </Grid>
               <Grid item>
+                {/* <Map /> */}
                 <SearchResultList />
               </Grid>
             </Grid>

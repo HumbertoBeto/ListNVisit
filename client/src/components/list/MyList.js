@@ -116,7 +116,7 @@ class MyList extends React.Component {
       root: {
         width: "100%",
         maxWidth: "36ch",
-        backgroundColor: "#FFF89A",
+        backgroundColor: "#fafafa",
       },
       inline: {
         display: "inline",
