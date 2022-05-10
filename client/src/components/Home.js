@@ -1,7 +1,10 @@
 import React from "react";
+import { connect } from "react-redux";
 import SearchResultList from "./search/SearchResultList";
 import MyList from "./list/MyList";
 import MyAppBar from "./search/MyAppBar";
+// import Map from "./map/Map";
+import MapOrSearch from "./MapOrSearch";
 import Map from "./map/Map";
 import { Grid, Paper } from "@mui/material";
 
@@ -23,6 +26,7 @@ class Home extends React.Component {
         background: "#ffffff",
       },
     };
+    //const showMap = false;
     return (
       <div style={myStyle.page}>
         <MyAppBar />
@@ -35,8 +39,10 @@ class Home extends React.Component {
                 </Paper>
               </Grid>
               <Grid item>
-                {/* <Map /> */}
-                <SearchResultList />
+                <Paper>
+                  {this.props.showMap === true && <Map />}
+                  <SearchResultList />
+                </Paper>
               </Grid>
             </Grid>
           </Grid>
@@ -46,4 +52,7 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+const mapStateToProps = (state) => {
+  return { showMap: state.pageControls.showMap };
+};
+export default connect(mapStateToProps, {})(Home);

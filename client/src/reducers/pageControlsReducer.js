@@ -3,6 +3,7 @@ import {
   ADD_LIST_LOCATION,
   TOGGLE_MENU_CLICKED,
   TOGGLE_EDIT_FORM,
+  TOGGLE_MAP,
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -11,6 +12,7 @@ const INITIAL_STATE = {
   editFormShow: false,
   chosenSearchLocation: {},
   listItemChosen: {},
+  showMap: true,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -45,6 +47,15 @@ export default (state = INITIAL_STATE, action) => {
         };
       } else {
         return { ...state, editFormShow: false };
+      }
+    case TOGGLE_MAP:
+      if (state.showMap === false) {
+        return {
+          ...state,
+          showMap: true,
+        };
+      } else {
+        return { ...state, showMap: false };
       }
     default:
       return state;

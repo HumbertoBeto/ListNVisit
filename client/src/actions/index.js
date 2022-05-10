@@ -13,6 +13,8 @@ import {
   REMOVE_LIST_LOCATION,
   UPDATE_LIST_LOCATION,
   TOGGLE_EDIT_FORM,
+  TOGGLE_MAP,
+  UPDATE_MAP_CENTER,
 } from "./types";
 
 export const signIn = (userId) => {
@@ -92,7 +94,8 @@ export const getList = () => async (dispatch) => {
   try {
     const myResponse = await list(config);
     // console.log("Current ITINERARY LIST: ", myResponse.data);
-    dispatch({ type: FETCH_LIST, payload: myResponse.data });
+    await dispatch({ type: FETCH_LIST, payload: myResponse.data });
+    await dispatch({ type: UPDATE_MAP_CENTER, payload: myResponse.data });
   } catch (err) {
     console.log("Error getting current Itinerary list ", err);
   }
@@ -136,6 +139,13 @@ export const toggleMenu = (location) => {
 export const toggleEditForm = () => {
   return {
     type: TOGGLE_EDIT_FORM,
+  };
+};
+
+//toggle Map/Search results view
+export const toggleMap = () => {
+  return {
+    type: TOGGLE_MAP,
   };
 };
 

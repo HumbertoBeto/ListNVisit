@@ -2,7 +2,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
-import { searchLocations } from "../../actions";
+import { searchLocations, toggleMap } from "../../actions";
 import { Paper, Divider, IconButton, InputBase } from "@mui/material";
 import { makeStyles } from "@mui/material";
 
@@ -43,6 +43,7 @@ class SearchBarInput extends React.Component {
 
   onSubmit = (formValues) => {
     this.props.searchLocations(formValues.search);
+    this.props.toggleMap();
     console.log("FORM Values: ", formValues.search);
   };
 
@@ -102,4 +103,4 @@ const formWrapped = reduxForm({
   form: "searchBarInput",
 })(SearchBarInput);
 
-export default connect(null, { searchLocations })(formWrapped);
+export default connect(null, { searchLocations, toggleMap })(formWrapped);

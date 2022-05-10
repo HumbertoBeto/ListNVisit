@@ -1,5 +1,10 @@
 import React from "react";
-import { toggleAddForm, addListLocation, getList } from "../../actions";
+import {
+  toggleAddForm,
+  addListLocation,
+  getList,
+  toggleMap,
+} from "../../actions";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import { Dialog, TextField, Grid, Button } from "@mui/material";
@@ -91,6 +96,7 @@ class SearchResultAdd extends React.Component {
       formProps
     );
     await this.props.getList();
+    await this.props.toggleMap();
   };
 
   render() {
@@ -173,6 +179,7 @@ SearchResultAdd = connect(mapStateToProps, {
   toggleAddForm,
   addListLocation,
   getList,
+  toggleMap,
 })(SearchResultAdd);
 
 const validate = (formValues) => {

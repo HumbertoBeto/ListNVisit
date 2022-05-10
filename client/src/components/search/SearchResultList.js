@@ -16,6 +16,7 @@ import {
 
 import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
 import SearchResultAdd from "./SearchResultAdd";
+// import Map from "../map/Map";
 //import { InfoIcon } from "@mui/icons-material";
 
 class SearchResultList extends React.Component {
@@ -81,17 +82,19 @@ class SearchResultList extends React.Component {
     return (
       <div style={myStyle.root}>
         <SearchResultAdd />
-        <ImageList rowHeight={180} style={myStyle.imageList}>
-          <ImageListItem
-            key="Subheader"
-            cols={4}
-            gap={8}
-            style={{ height: "auto" }}
-          >
-            {/* <ListSubheader component="div">Search Results:</ListSubheader> */}
-          </ImageListItem>
-          {this.renderList()}
-        </ImageList>
+        <div>
+          <ImageList rowHeight={180} style={myStyle.imageList}>
+            <ImageListItem
+              key="Subheader"
+              cols={4}
+              gap={8}
+              style={{ height: "auto" }}
+            >
+              {/* <ListSubheader component="div">Search Results:</ListSubheader> */}
+            </ImageListItem>
+            {this.renderList()}
+          </ImageList>
+        </div>
       </div>
     );
   }

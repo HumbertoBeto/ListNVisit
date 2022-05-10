@@ -4,6 +4,7 @@ import authReducer from "./authReducer";
 import searchReducer from "./searchReducer";
 import pageControlsReducer from "./pageControlsReducer";
 import listReducer from "./listReducer";
+import mapReducer from "./mapReducer";
 
 export default combineReducers({
   auth: authReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
   searchResults: searchReducer,
   pageControls: pageControlsReducer,
   list: listReducer,
+  map: mapReducer,
 });
