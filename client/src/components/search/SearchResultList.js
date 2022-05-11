@@ -73,7 +73,7 @@ class SearchResultList extends React.Component {
         backgroundColor: "white",
       },
       imageList: {
-        width: 1400,
+        width: 1450,
         height: 930,
       },
     };

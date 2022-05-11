@@ -41,8 +41,25 @@ class SearchBarInput extends React.Component {
     );
   };
 
+  renderLocationBar = ({ input, label, meta }) => {
+    const myStyle = {
+      input: {
+        marginLeft: 1,
+        flex: 1,
+      },
+    };
+    return (
+      <InputBase
+        {...input}
+        placeholder={label}
+        inputProps={{ "aria-label": "find places" }}
+        style={myStyle.input}
+      />
+    );
+  };
+
   onSubmit = (formValues) => {
-    this.props.searchLocations(formValues.search);
+    this.props.searchLocations(formValues.search, formValues.location);
     this.props.toggleMap();
     console.log("FORM Values: ", formValues.search);
   };
@@ -78,14 +95,19 @@ class SearchBarInput extends React.Component {
         <Field
           name="search"
           component={this.renderSearchBar}
-          label="Find Places"
+          label="Find Places..."
         />
         <Divider orientation="vertical" style={myStyle.divider} />
+        <Field
+          name="location"
+          component={this.renderLocationBar}
+          label="In Location..."
+        />
         {/* <InputBase
-              placeholder="In location"
-              inputProps={{ "aria-label": "in location" }}
-              style={myStyle.input}
-            /> */}
+          placeholder="In location"
+          inputProps={{ "aria-label": "in location" }}
+          style={myStyle.input}
+        /> */}
         {/* <IconButton
             style={myStyle.iconButton}
             color="primary"
@@ -93,7 +115,16 @@ class SearchBarInput extends React.Component {
           >
             <SearchIcon />
           </IconButton> */}
-        <button>search</button>
+        <Divider orientation="vertical" style={myStyle.divider} />
+        <button
+          style={{
+            border: "transparent",
+            background: "white",
+            fontSize: "16px",
+          }}
+        >
+          <i class="fa fa-search"></i>
+        </button>
       </Paper>
     );
   }
