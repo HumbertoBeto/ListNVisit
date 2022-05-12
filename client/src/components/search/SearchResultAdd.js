@@ -7,7 +7,16 @@ import {
 } from "../../actions";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
-import { Dialog, TextField, Grid, Button } from "@mui/material";
+import {
+  Dialog,
+  TextField,
+  Grid,
+  Button,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Divider,
+} from "@mui/material";
 import Search from "@mui/icons-material/Search";
 
 class SearchResultAdd extends React.Component {
@@ -41,6 +50,7 @@ class SearchResultAdd extends React.Component {
           InputLabelProps={{
             shrink: true,
           }}
+          fullWidth
         />
         {this.renderError(meta)}
       </div>
@@ -61,6 +71,8 @@ class SearchResultAdd extends React.Component {
           inputProps={{
             step: 300, // 5 min
           }}
+          fullWidth
+          margin="dense"
         />
         {this.renderError(meta)}
       </div>
@@ -77,6 +89,8 @@ class SearchResultAdd extends React.Component {
         multiline
         rows={2}
         variant="outlined"
+        fullWidth
+        margin="dense"
       />
       // <div className="field">
       //   <label>{label}</label>
@@ -131,40 +145,64 @@ class SearchResultAdd extends React.Component {
         fullWidth={true}
         maxWidth="md"
       >
+        <DialogTitle>
+          {this.props.pageControls.chosenSearchLocation.name}
+        </DialogTitle>
+        <div
+          style={{
+            display: "block",
+            marginLeft: "auto",
+            marginRight: "auto",
+            // borderRadius: "50%",
+            //width: "350px",
+          }}
+        >
+          <img
+            src={this.props.pageControls.chosenSearchLocation.picUrl}
+            height="180px"
+            width="350px"
+            borderRadius="8px"
+          />
+        </div>
+        <Divider variant="middle" />
         <form
           onSubmit={this.props.handleSubmit(this.onSubmit)}
           className="ui form error"
         >
-          <Grid
+          {/* <Grid
             container
             direction="row"
             justifyContent="center"
             alignItems="center"
             spacing={3}
-          >
-            <Grid item md={3}>
-              <Field
-                name="date"
-                component={this.renderInputDate}
-                label="Enter Planned Date"
-              />
-            </Grid>
-            <Grid item md={3}>
-              <Field
-                name="time"
-                component={this.renderInputTime}
-                label="Enter Expected time of Arrival"
-              />
-            </Grid>
-            <Grid item md={6}>
-              <Field
-                name="notes"
-                component={this.renderInputNotes}
-                label="Enter Notes (optional)"
-              />
-            </Grid>
-            <button>Add to Trip</button>
-          </Grid>
+          > */}
+          <DialogContent>
+            {/* <Grid item md={3}> */}
+            <Field
+              name="date"
+              component={this.renderInputDate}
+              label="Enter Planned Date"
+            />
+            {/* </Grid> */}
+            {/* <Grid item md={3}> */}
+            <Field
+              name="time"
+              component={this.renderInputTime}
+              label="Enter Expected time of Arrival"
+            />
+            {/* </Grid> */}
+            {/* <Grid item md={6}> */}
+            <Field
+              name="notes"
+              component={this.renderInputNotes}
+              label="Enter Notes (optional)"
+            />
+            {/* </Grid> */}
+          </DialogContent>
+          <DialogActions>
+            <button style={{ background: "white" }}>Add to Trip</button>
+          </DialogActions>
+          {/* </Grid> */}
         </form>
       </Dialog>
     );

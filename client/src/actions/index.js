@@ -1,4 +1,5 @@
 import list from "../apis/list";
+import history from "../history";
 import google from "../apis/google";
 import axios from "axios";
 
@@ -18,6 +19,7 @@ import {
 } from "./types";
 
 export const signIn = (userId) => {
+  history.push("/");
   return {
     type: SIGN_IN,
     payload: userId,
@@ -25,6 +27,7 @@ export const signIn = (userId) => {
 };
 
 export const signOut = () => {
+  history.push("/login");
   return {
     type: SIGN_OUT,
   };
