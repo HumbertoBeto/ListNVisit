@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import ListMenu from "./ListMenu";
 import ListEdit from "./ListEdit";
-import { getList, toggleMenu } from "../../actions";
+import { getList, toggleMenu, setAnchor } from "../../actions";
 import {
   List,
   ListItem,
@@ -48,7 +48,13 @@ class MyList extends React.Component {
 
     //create reft
     return sortedList.map((location) => {
-      //const myRef = React.createRef();
+      const newDate = new Date(location.arrivalDateTime);
+      const curDate = newDate.toString();
+      const finalDate = curDate.substring(0, curDate.indexOf("GMT"));
+      //const finalDate = newDate.split("GMT")[0];
+      //console.log(finalDate);
+      //const divRef = React.useRef();
+      this.myRef = React.createRef();
       return (
         <div key={location.destinationId}>
           <ListItem alignItems="flex-start">
@@ -65,9 +71,13 @@ class MyList extends React.Component {
                     style={myStyle.inline}
                     color="textPrimary"
                   >
-                    {location.arrivalDateTime}
+                    {` - ${finalDate}`}
+                    {/* <Divider variant="middle" /> */}
+                    <br></br>
+                    {` - ${location.address}`}
                   </Typography>
-                  {` — ${location.note}`}
+                  <br></br>
+                  {` - ${location.note}`}
                 </React.Fragment>
               }
             />
@@ -77,8 +87,14 @@ class MyList extends React.Component {
                 aria-label="delete"
                 aria-controls="simple-menu"
                 aria-haspopup="true"
-                //ref={myRef}
-                onClick={() => this.props.toggleMenu(location)}
+                ref={this.myRef}
+                onClick={(event) => {
+                  console.log("Event:", event.currentTarget);
+                  // const curLocation = location;
+                  //location.anchorEl = event.currentTarget;
+                  this.props.setAnchor(this.myRef.current);
+                  this.props.toggleMenu(location);
+                }}
               >
                 <MoreHorizIcon />
               </IconButton>
@@ -126,7 +142,7 @@ class MyList extends React.Component {
     return (
       <div>
         <List style={myStyle.root}>{this.renderList()}</List>
-        <ListMenu />
+        <ListMenu style={{ marginRight: "500px" }} />
         <ListEdit />
       </div>
     );
@@ -140,4 +156,5 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   getList,
   toggleMenu,
+  setAnchor,
 })(MyList);

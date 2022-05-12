@@ -4,6 +4,8 @@ import {
   TOGGLE_MENU_CLICKED,
   TOGGLE_EDIT_FORM,
   TOGGLE_MAP,
+  TOGGLE_LOADING,
+  SET_ANCHOR,
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -13,6 +15,8 @@ const INITIAL_STATE = {
   chosenSearchLocation: {},
   listItemChosen: {},
   showMap: true,
+  showLoading: false,
+  curAnchor: null,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -57,6 +61,20 @@ export default (state = INITIAL_STATE, action) => {
       } else {
         return { ...state, showMap: false };
       }
+    case TOGGLE_LOADING:
+      if (state.showLoading === false) {
+        return {
+          ...state,
+          showLoading: true,
+        };
+      } else {
+        return { ...state, showLoading: false };
+      }
+    case SET_ANCHOR:
+      return {
+        ...state,
+        curAnchor: action.payload,
+      };
     default:
       return state;
   }

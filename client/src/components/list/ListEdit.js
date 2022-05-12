@@ -8,7 +8,16 @@ import {
 } from "../../actions";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
-import { Dialog, TextField, Grid, Button } from "@mui/material";
+import {
+  Dialog,
+  TextField,
+  Grid,
+  Button,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Divider,
+} from "@mui/material";
 
 class ListEdit extends React.Component {
   renderError({ error, touched }) {
@@ -32,6 +41,7 @@ class ListEdit extends React.Component {
           InputLabelProps={{
             shrink: true,
           }}
+          fullWidth
           // placeholder="2022-05-11"
         />
         {this.renderError(meta)}
@@ -53,6 +63,8 @@ class ListEdit extends React.Component {
           inputProps={{
             step: 300, // 5 min
           }}
+          fullWidth
+          margin="dense"
         />
         {this.renderError(meta)}
       </div>
@@ -69,6 +81,8 @@ class ListEdit extends React.Component {
         multiline
         rows={2}
         variant="outlined"
+        fullWidth
+        margin="dense"
       />
     );
   }
@@ -104,45 +118,70 @@ class ListEdit extends React.Component {
         open={this.props.pageControls.editFormShow}
         aria-labelledby="form-dialog-title"
         fullWidth={true}
-        maxWidth="md"
+        maxWidth="sm"
       >
+        <DialogTitle>{this.props.pageControls.listItemChosen.name}</DialogTitle>
+        <div
+          style={{
+            display: "block",
+            marginLeft: "auto",
+            marginRight: "auto",
+            // borderRadius: "50%",
+            //width: "350px",
+          }}
+        >
+          <img
+            src={this.props.pageControls.listItemChosen.url}
+            height="180px"
+            width="350px"
+          />
+        </div>
+        <Divider variant="middle" />
         <form
           onSubmit={this.props.handleSubmit(this.onSubmit)}
           className="ui form error"
         >
-          <Grid
+          {/* <Grid
             container
             direction="row"
             justifyContent="center"
             alignItems="center"
             spacing={3}
-          >
-            <Grid item md={3}>
-              <Field
-                name="date"
-                component={this.renderInputDate}
-                label="New Date:"
-              />
-            </Grid>
-            <Grid item md={3}>
-              <Field
-                name="time"
-                component={this.renderInputTime}
-                label="New Arrival Time:"
-              />
-            </Grid>
-            <Grid item md={6}>
-              <Field
-                name="notes"
-                component={this.renderInputNotes}
-                label="New Notes:"
-              />
-            </Grid>
-            <button>Update</button>
-            <button type="button" onClick={this.onCancel}>
+          > */}
+          {/* <Grid item md={3}> */}
+          <DialogContent>
+            <Field
+              name="date"
+              component={this.renderInputDate}
+              label="New Date:"
+            />
+            {/* </Grid> */}
+            {/* <Grid item md={3}> */}
+            <Field
+              name="time"
+              component={this.renderInputTime}
+              label="New Arrival Time:"
+            />
+            {/* </Grid> */}
+            {/* <Grid item md={6}> */}
+            <Field
+              name="notes"
+              component={this.renderInputNotes}
+              label="New Notes:"
+            />
+          </DialogContent>
+          {/* </Grid> */}
+          <DialogActions>
+            <button style={{ background: "white" }}>Update</button>
+            <button
+              type="button"
+              onClick={this.onCancel}
+              style={{ background: "white" }}
+            >
               Cancel
             </button>
-          </Grid>
+          </DialogActions>
+          {/* </Grid> */}
         </form>
       </Dialog>
     );

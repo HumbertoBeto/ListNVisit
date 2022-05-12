@@ -6,7 +6,8 @@ import MyAppBar from "./search/MyAppBar";
 // import Map from "./map/Map";
 import MapOrSearch from "./MapOrSearch";
 import Map from "./map/Map";
-import { Grid, Paper } from "@mui/material";
+import Loading from "./Loading";
+import { Grid, Paper, CircularProgress, Box } from "@mui/material";
 
 class Home extends React.Component {
   render() {
@@ -41,6 +42,7 @@ class Home extends React.Component {
               <Grid item>
                 <Paper>
                   {this.props.showMap === true && <Map />}
+                  {this.props.showLoading === true && <Loading />}
                   <SearchResultList />
                 </Paper>
               </Grid>
@@ -53,6 +55,9 @@ class Home extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return { showMap: state.pageControls.showMap };
+  return {
+    showMap: state.pageControls.showMap,
+    showLoading: state.pageControls.showLoading,
+  };
 };
 export default connect(mapStateToProps, {})(Home);

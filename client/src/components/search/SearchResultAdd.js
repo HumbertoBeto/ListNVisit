@@ -143,7 +143,7 @@ class SearchResultAdd extends React.Component {
         open={this.props.pageControls.addFormShow}
         aria-labelledby="form-dialog-title"
         fullWidth={true}
-        maxWidth="md"
+        maxWidth="sm"
       >
         <DialogTitle>
           {this.props.pageControls.chosenSearchLocation.name}

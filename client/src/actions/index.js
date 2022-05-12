@@ -16,6 +16,8 @@ import {
   TOGGLE_EDIT_FORM,
   TOGGLE_MAP,
   UPDATE_MAP_CENTER,
+  TOGGLE_LOADING,
+  SET_ANCHOR,
 } from "./types";
 
 export const signIn = (userId) => {
@@ -43,6 +45,9 @@ export const fetchSearchLocations = () => {
 //returns a JSON list of locations
 export const searchLocations =
   (searchInput, locationSearch) => async (dispatch) => {
+    //turn on loading wheel
+    dispatch({ type: TOGGLE_LOADING });
+
     let finalSearchterm = searchInput + " in " + locationSearch;
     console.log("Final Search term: ", finalSearchterm);
     const dataObj = {
@@ -84,6 +89,8 @@ export const searchLocations =
       //dispatch to update search locations & dispatch to fetch latest search locations
       dispatch({ type: UPDATE_SEARCH_LOCATIONS, payload: myResponse.data });
       dispatch({ type: FETCH_SEARCH_LOCATIONS });
+      //turn off loading wheel
+      dispatch({ type: TOGGLE_LOADING });
     } catch (err) {
       console.log("Error while calling Google API: ", err);
     }
@@ -134,7 +141,8 @@ export const toggleAddForm = (location) => {
 };
 
 export const toggleMenu = (location) => {
-  //console.log("TOGGLE_MENU: ", location);
+  //console.log("Cur Anchor: ", curAnchor);
+  //location.curAnchor = curAnchor;
   return {
     type: TOGGLE_MENU_CLICKED,
     payload: location,
@@ -148,10 +156,26 @@ export const toggleEditForm = () => {
   };
 };
 
+//toggle loading wheel on and off
+export const toggleLoading = () => {
+  return {
+    type: TOGGLE_EDIT_FORM,
+  };
+};
+
 //toggle Map/Search results view
 export const toggleMap = () => {
   return {
     type: TOGGLE_MAP,
+  };
+};
+
+//set anchor for menu
+export const setAnchor = (curAnchor) => {
+  console.log("CUR ANCHOR: ", curAnchor);
+  return {
+    type: SET_ANCHOR,
+    payload: curAnchor,
   };
 };
 
