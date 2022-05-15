@@ -47,6 +47,7 @@ class MyList extends React.Component {
     //console.log("SORTED LIST", sortedList);
 
     //create reft
+    let curCount = 0;
     return sortedList.map((location) => {
       const newDate = new Date(location.arrivalDateTime);
       const curDate = newDate.toString();
@@ -55,6 +56,7 @@ class MyList extends React.Component {
       //console.log(finalDate);
       //const divRef = React.useRef();
       this.myRef = React.createRef();
+      curCount++;
       return (
         <div key={location.destinationId}>
           <ListItem alignItems="flex-start">
@@ -62,7 +64,7 @@ class MyList extends React.Component {
               <Avatar alt={location.name} src={location.url} />
             </ListItemAvatar>
             <ListItemText
-              primary={location.name}
+              primary={`${curCount}. ${location.name}`}
               secondary={
                 <React.Fragment>
                   <Typography

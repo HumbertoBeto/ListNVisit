@@ -42,7 +42,7 @@ class SearchResultList extends React.Component {
           <img
             src={location.picUrl}
             alt={location.name}
-            style={{ height: "180px", width: "350px" }}
+            style={{ height: "180px", width: "360px" }}
           />
           <ImageListItemBar
             title={location.name}
